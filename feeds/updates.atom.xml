@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Cloud Computing Project - Updates</title><link href="/" rel="alternate"></link><link href="/feeds/updates.atom.xml" rel="self"></link><id>/</id><updated>2019-03-26T00:00:00-04:00</updated><entry><title>Hello World</title><link href="/hello-world.html" rel="alternate"></link><published>2019-03-26T00:00:00-04:00</published><updated>2019-03-26T00:00:00-04:00</updated><author><name>Team Name</name></author><id>tag:None,2019-03-26:/hello-world.html</id><summary type="html">&lt;h5&gt;Hello World&lt;/h5&gt;
+&lt;p&gt;Currently busy working on our project :)&lt;/p&gt;</summary><content type="html">&lt;h5&gt;Hello World&lt;/h5&gt;
+&lt;p&gt;Currently busy working on our project :)&lt;/p&gt;</content></entry></feed>
