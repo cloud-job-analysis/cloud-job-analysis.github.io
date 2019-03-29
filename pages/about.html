@@ -65,7 +65,10 @@
     <section id="content" class="body">
 
         <h1>About</h1>
-<p>Test about page</p>
+<p>In modern large, parallel systems such as single-tenant data centers and scientific clusters there are typically many thousands of active or to-be-run jobs at any given time. Each job has its own requirements for time and space in order to run properly. Due to resource constraints it is not possible to run each job simultaneously and so scheduling algorithms are necessary in order to assign an ordering and allocate resources to the jobs submitted to the system.</p>
+<p>Scheduling algorithms generally try to optimize one or more criteria such as fairness or priority. 
+In modern systems, the biggest concern in selecting an algorithm is utilization, since even small inefficiencies can cost <a href="https://www.forbes.com/sites/jeffbercovici/2014/06/19/that-facebook-outage-only-cost-facebook-about-500k/#e0202ca6db6d">millions of dollars</a>. Algorithms like Distributed Shortest Remaining Time First <a href="https://ieeexplore.ieee.org/document/8520806">(D-SRTF)</a> and earliest deadline first <a href="https://arxiv.org/pdf/1101.0056.pdf">(EDF)</a> address this issue by optimizing throughput. Unfortunately, these algorithms are predicated on the ability to reliably predict the run time of jobs, which is typically only possible under strong assumptions about the system and job type.</p>
+<p>In this project we aim to use machine learning (ML) modeling to obtain better predictions of job run-times similar to the efforts in <a href="https://ieeexplore.ieee.org/document/7604542">helmy2015machine</a>. This will enable the use of run-time-based scheduling algorithms in more general traffic scenarios.</p>
     </section>
 </article>
 
