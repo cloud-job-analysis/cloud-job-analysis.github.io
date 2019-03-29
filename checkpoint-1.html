@@ -30,11 +30,11 @@
     <meta name="twitter:creator" content="">
     <meta name="twitter:url" content="/checkpoint-1.html">
     <meta name="twitter:title" content="Cloud Computing Project ~ Checkpoint 1">
-    <meta name="twitter:description" content="Checkpoint 1 Current Status We analyzed the working of Mesos. The master node determines how many resources to offer to each framework. In here, The agents will inform the mesos master of the resources it contains The Mesos Master will send a resource offer to framework 1. Framework will decide …">
+    <meta name="twitter:description" content="Checkpoint 1 General Updates Since Project Proposal Based on the professor’s feedback on our project proposal, we spent a considerable amount of time determining more explicit details of what our system will look like. We are targeting the competing goals of maintaining both realism and feasibility of implementation within …">
 
     <!-- Facebook Meta Data -->
     <meta property="og:title" content="Cloud Computing Project ~ Checkpoint 1"/>
-    <meta property="og:description" content="Checkpoint 1 Current Status We analyzed the working of Mesos. The master node determines how many resources to offer to each framework. In here, The agents will inform the mesos master of the resources it contains The Mesos Master will send a resource offer to framework 1. Framework will decide …"/>
+    <meta property="og:description" content="Checkpoint 1 General Updates Since Project Proposal Based on the professor’s feedback on our project proposal, we spent a considerable amount of time determining more explicit details of what our system will look like. We are targeting the competing goals of maintaining both realism and feasibility of implementation within …"/>
     <meta property="og:image" content=""/>
 </head>
 
@@ -78,6 +78,10 @@
                                                   title="Permalink to Checkpoint 1">Checkpoint 1</a></h2>
             <div class="entry-content blog-post">
                 <h2>Checkpoint 1</h2>
+<h4>General Updates Since Project Proposal</h4>
+<p>Based on the professor’s feedback on our project proposal, we spent a considerable amount of time determining more explicit details of what our system will look like. We are targeting the competing goals of maintaining both realism and feasibility of implementation within the project timeframes. We elected to implement a simulated version of the Mesos platform to serve requests from various frameworks.</p>
+<p>For the sake of pushing the project forward, we decided to first implement a bare-bones version of the system with a single, unreplicated master and hand-created job types. Worker agents will be represented by threads with their own resources that we hand-pick to simulate a realistic environment. In turn, we plan to generalize this initial setup to increasingly realistic implementations (e.g. representing worker agents by individual processes and communicating via RPCs, calling Spark/mySQL/other frameworks rather than simulating calls, correspondingly complex and robust scheduling algorithms -- both our baseline DRF and SJF implementations and our ML-based SJF implementation).</p>
+<p>We are nearly done with the single-master implementation of Mesos. Our progress (including a description of our research/planning efforts) is detailed below.</p>
 <h4>Current Status</h4>
 <p>We analyzed the working of Mesos. The master node determines how many resources to offer to each framework. In here, </p>
 <ol>
@@ -86,11 +90,12 @@
 <li>Framework will decide which resources to utilize using tasks</li>
 <li>Master sends tasks to agents. </li>
 </ol>
-<p>Since we are working with individual jobs instead of frameworks, steps 2 + 3 become redundant. Instead, the Mesos Master itself should act as the framework scheduler for the individual jobs, denying resource offers that aren’t relevant. In order to satisfy the constraints of a framework, the framework themselves would usually have the ability to deny resource offers. Instead, we’d have to have the master node take on this task.A model of the Mesos master has been implemented.</p>
-<p>We looked into simulating and integrating jobs calls from different frameworks like Spark, MapReduce and nginx. This helped decide features for the jobs. This serves as a sanity check as to whether our architecture can support real-life processes. </p>
+<p>Since we are working with individual jobs for this checkpoint instead of frameworks, steps 2 + 3 are redundant. Instead, the Mesos Master itself acts as the framework scheduler for the individual jobs, denying jobs that can’t be served. In order to satisfy the constraints of a framework, the framework themselves would usually have the ability to deny resource offers. Instead, the master node takes on this task.</p>
+<p>For our own understanding and for presentation purposes, we drew finite state diagrams for our implementation of the Mesos master and agent (host) nodes. These figures are provided below.</p>
+<p>A model of the Mesos master has been implemented and can be found in the “single-node” repository of our github organization (see link below).</p>
+<p>We looked into simulating and integrating jobs calls from different frameworks like Spark, MapReduce and nginx. This helped decide features for our simulated jobs. This serves as a sanity check as to whether our architecture can support real-life processes and will be generalized and made more realistic in future checkpoints.</p>
 <p>We have decided various properties for each job that will help our algorithm make good predictions. These are in tune with attributes related to Apache Spark and nginx processes. Presently, we categorise jobs into 4 basic types - web-based jobs, machine learning jobs, database jobs and indexing jobs. Each of these have distinct characteristics which affect the performance of scheduling algorithms. For use in the algorithm, values of these characteristics are generated by sampling from a Gaussian distribution.</p>
-<p>We have looked at various scheduling algorithms to compare our approach to. The master node in Mesos uses the Dominant Resource Fairness (DRF) algorithm. So that is the first baseline we implemented. Similarly, we have also implemented Shortest Job First (SJF).</p>
-<p>We have completed designing the states and flow for the master node and agents (hosts). This depicts the various stages of our system and gives a high-level overview of its basic structure.</p>
+<p>We have considered a variety of existing scheduling algorithms to compare our approach to. As baselines, we chose to implement bare-bones (in that they are compatible with the simplified jobs and users we’ve implemented in this checkpoint) versions of Shortest Job First and Dominant Resource Fairness. Ultimately we intend to measure the throughput of our system over a long period of time with each of these baseline algorithms as well as our ML-based SJF algorithm and compare the performance. Our implementations of SJF and DRF can be found in the ‘Scheduling_Algos’ repository of our github organization (link below)</p>
 <h5>Master State Diagram</h5>
 <p><img alt="discover" src="images/master.jpg"></p>
 <h5>Agent State Diagram</h5>
@@ -111,7 +116,8 @@
 <h4>Link to code repositories</h4>
 <p><a href="https://github.com/cloud-job-analysis">https://github.com/cloud-job-analysis</a></p>
 <h4>Instructions to run</h4>
-<p>Just run mesos.py file on master branch.It currently only uses dummy jobs and FCFS master scheduling algorithm that aren’t very interesting but it’s a proof of concept at the moment.</p>
+<p>Just run mesos.py file on master branch.</p>
+<p>It currently only uses dummy jobs and FCFS master scheduling algorithm that aren’t very interesting but it’s a proof of concept at the moment.</p>
             </div>
             <div class="post_list">
                 <span>By </span>
