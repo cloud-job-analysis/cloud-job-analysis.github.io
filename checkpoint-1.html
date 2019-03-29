@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" itemscope itemtype="http://schema.org/Person">
+<head>
+            <meta charset="utf-8">
+        <!-- Site Meta Data -->
+        <title>Checkpoint 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Team EBAY">
+
+        <link rel="shortcut icon" href="">
+
+        <!-- schema.org -->
+        <meta itemprop="name" content="Cloud Computing Project">
+        <meta itemprop="image" content="">
+        <meta itemprop="description" content="">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <!-- Style Meta Data -->
+        <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css"/>
+
+        <!-- Feed Meta Data -->
+
+        <!-- Twitter Feed -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:url" content="/checkpoint-1.html">
+    <meta name="twitter:title" content="Cloud Computing Project ~ Checkpoint 1">
+    <meta name="twitter:description" content="Checkpoint 1 Current Status We analyzed the working of Mesos. The master node determines how many resources to offer to each framework. In here, The agents will inform the mesos master of the resources it contains The Mesos Master will send a resource offer to framework 1. Framework will decide …">
+
+    <!-- Facebook Meta Data -->
+    <meta property="og:title" content="Cloud Computing Project ~ Checkpoint 1"/>
+    <meta property="og:description" content="Checkpoint 1 Current Status We analyzed the working of Mesos. The master node determines how many resources to offer to each framework. In here, The agents will inform the mesos master of the resources it contains The Mesos Master will send a resource offer to framework 1. Framework will decide …"/>
+    <meta property="og:image" content=""/>
+</head>
+
+<body>
+<!-- Sidebar -->
+<aside>
+    <!--<center><a href=""><img id="avatar" src=""></a></center>-->
+    <h1>Cloud Computing Project</h1>
+    <br>
+
+
+    <nav class="nav">
+        <ul class="list-bare">
+
+                <li><a class="nav__link" href="/">Blog</a></li>
+
+                <li><a class="nav__link" href="/pages/about.html">About</a></li>
+
+        </ul>
+    </nav>
+
+    <p class="social">
+                <a href="https://github.com/cloud-job-analysis" target="_blank"><img
+                        src="/theme/images/icons/github.png"></a>
+    </p>
+
+        <h2>Categories</h2>
+        <ul class="navbar">
+                <li class="active"><a
+                        href="/category/updates.html">Updates</a></li>
+        </ul>
+
+
+</aside>
+
+<!-- Content -->
+<article>
+    <section id="content">
+        <article>
+            <h2 class="post_title post_detail"><a href="/checkpoint-1.html" rel="bookmark"
+                                                  title="Permalink to Checkpoint 1">Checkpoint 1</a></h2>
+            <div class="entry-content blog-post">
+                <h2>Checkpoint 1</h2>
+<h4>Current Status</h4>
+<p>We analyzed the working of Mesos. The master node determines how many resources to offer to each framework. In here, </p>
+<ol>
+<li>The agents will inform the mesos master of the resources it contains</li>
+<li>The Mesos Master will send a resource offer to framework 1.</li>
+<li>Framework will decide which resources to utilize using tasks</li>
+<li>Master sends tasks to agents. </li>
+</ol>
+<p>Since we are working with individual jobs instead of frameworks, steps 2 + 3 become redundant. Instead, the Mesos Master itself should act as the framework scheduler for the individual jobs, denying resource offers that aren’t relevant. In order to satisfy the constraints of a framework, the framework themselves would usually have the ability to deny resource offers. Instead, we’d have to have the master node take on this task.A model of the Mesos master has been implemented.</p>
+<p>We looked into simulating and integrating jobs calls from different frameworks like Spark, MapReduce and nginx. This helped decide features for the jobs. This serves as a sanity check as to whether our architecture can support real-life processes. </p>
+<p>We have decided various properties for each job that will help our algorithm make good predictions. These are in tune with attributes related to Apache Spark and nginx processes. Presently, we categorise jobs into 4 basic types - web-based jobs, machine learning jobs, database jobs and indexing jobs. Each of these have distinct characteristics which affect the performance of scheduling algorithms. For use in the algorithm, values of these characteristics are generated by sampling from a Gaussian distribution.</p>
+<p>We have looked at various scheduling algorithms to compare our approach to. The master node in Mesos uses the Dominant Resource Fairness (DRF) algorithm. So that is the first baseline we implemented. Similarly, we have also implemented Shortest Job First (SJF).</p>
+<p>We have completed designing the states and flow for the master node and agents (hosts). This depicts the various stages of our system and gives a high-level overview of its basic structure.</p>
+<h5>Master State Diagram</h5>
+<p><img alt="discover" src="images/master.jpg"></p>
+<h5>Agent State Diagram</h5>
+<p><img alt="Sample Input" src="images/agent.jpg"></p>
+<h4>Work Distribution</h4>
+<p><strong>Eli</strong>: Implementation of the Master scheduling algorithms &amp; integration with Brian’s work</p>
+<p><strong>Brian</strong>: Implementation of the master node &amp; integration with Eli’s work</p>
+<p><strong>Avais</strong>: Spark, Map Reduce, NGINX job calls, Implementing website</p>
+<p><strong>Yash</strong>: Job Modeling and generating data for all job categories</p>
+<h4>Next Steps</h4>
+<ol>
+<li>Implementing Agent object based on the FSM displayed above</li>
+<li>Customizing currently implemented algorithms for our jobs</li>
+<li>Implementing various ML algorithms</li>
+<li>Implementing RPC communication between Master and Agent</li>
+<li>Scheduling Spark, Map Reduce and Nginx jobs on the new Agent</li>
+</ol>
+<h4>Link to code repositories</h4>
+<p><a href="https://github.com/cloud-job-analysis">https://github.com/cloud-job-analysis</a></p>
+<h4>Instructions to run</h4>
+<p>Just run mesos.py file on master branch.It currently only uses dummy jobs and FCFS master scheduling algorithm that aren’t very interesting but it’s a proof of concept at the moment.</p>
+            </div>
+            <div class="post_list">
+                <span>By </span>
+                <a href="/author/team-ebay.html">@Team EBAY</a>
+                <span> in </span>
+                <span class="post_category"><a href="/category/updates.html" rel="bookmark"
+                                               title="Permalink to Updates">[ Updates ]</a></span>
+                <span class="post_date">Thu 28 March 2019</span>
+                <div><span>Tags : </span>
+                </div>
+
+                <div class="entry-social">
+                    <span class="twitter"><a target="_blank" rel="nofollow"
+                                             onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"
+                                             title="Twitter"
+                                             href="https://twitter.com/share?url=/checkpoint-1.html&text=Checkpoint 1&via="><img
+                            src="/theme/images/icons/twitter-s.png"></a></span>
+
+                    <span class="gplus"><a target="_blank" title="Google +"
+                                           href="https://plus.google.com/share?url=/checkpoint-1.html&hl=fr"
+                                           rel="nofollow"
+                                           onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                            src="/theme/images/icons/google-s.png"></a></span>
+
+                    <span class="facebook"><a target="_blank" title="Facebook" rel="nofollow"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"
+                                              href="https://www.facebook.com/sharer.php?u=/checkpoint-1.html&t=Checkpoint 1"><img
+                            src="/theme/images/icons/facebook-s.png"></a></span>
+
+                    <a target="_blank" title="Linkedin"
+                       href="https://www.linkedin.com/shareArticle?mini=true&url=/checkpoint-1.html&title=Checkpoint 1"
+                       rel="nofollow"
+                       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                            src="/theme/images/icons/linkedin-s.png"></a>
+
+                    <span class="mail"><a
+                            href="mailto:?subject=Checkpoint 1&amp;body=Viens découvrir un article à propos de [Checkpoint 1] sur le site de Team EBAY. /checkpoint-1.html"
+                            title="Share by Email" target="_blank"><img
+                            src="/theme/images/icons/mail-s.png"></a></span>
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<!-- Footer -->
+    <footer>
+        <p>
+            Blog powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>.
+            Theme <a href="https://github.com/parbhat/pelican-blue">Pelican-Blue</a> by <a
+                href="https://parbhatpuri.com/">@parbhat</a>.
+        </p>
+    </footer>
+
+
+</body>
+</html>
