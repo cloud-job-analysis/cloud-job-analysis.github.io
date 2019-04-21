@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" itemscope itemtype="http://schema.org/Person">
+<head>
+            <meta charset="utf-8">
+        <!-- Site Meta Data -->
+        <title>Checkpoint 2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Team BAYES">
+
+        <link rel="shortcut icon" href="">
+
+        <!-- schema.org -->
+        <meta itemprop="name" content="Cloud Computing Project">
+        <meta itemprop="image" content="">
+        <meta itemprop="description" content="">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <!-- Style Meta Data -->
+        <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="./theme/css/pygments.css" type="text/css"/>
+
+        <!-- Feed Meta Data -->
+            <link href="./feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+                  title="Cloud Computing Project ATOM Feed"/>
+
+        <!-- Twitter Feed -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:url" content="./checkpoint-2.html">
+    <meta name="twitter:title" content="Cloud Computing Project ~ Checkpoint 2">
+    <meta name="twitter:description" content="Checkpoint 2 submission: General Updates Since Midterm Presentation: Since the past checkpoint, we have made substantial progress towards having a working system. As of the midterm presentation, our master and agent code were two separate entities that abstracted away each other’s functionality. We have since integrated our master and …">
+
+    <!-- Facebook Meta Data -->
+    <meta property="og:title" content="Cloud Computing Project ~ Checkpoint 2"/>
+    <meta property="og:description" content="Checkpoint 2 submission: General Updates Since Midterm Presentation: Since the past checkpoint, we have made substantial progress towards having a working system. As of the midterm presentation, our master and agent code were two separate entities that abstracted away each other’s functionality. We have since integrated our master and …"/>
+    <meta property="og:image" content=""/>
+</head>
+
+<body>
+<!-- Sidebar -->
+<aside>
+    <!--<center><a href="."><img id="avatar" src=""></a></center>-->
+    <h1>Cloud Computing Project</h1>
+    <br>
+
+
+    <nav class="nav">
+        <ul class="list-bare">
+
+                <li><a class="nav__link" href="/">Blog</a></li>
+
+                <li><a class="nav__link" href="./pages/about.html">About</a></li>
+
+        </ul>
+    </nav>
+
+    <p class="social">
+                <a href="https://github.com/cloud-job-analysis" target="_blank"><img
+                        src="./theme/images/icons/github.png"></a>
+            <a href="./feeds/all.atom.xml" rel="alternate">
+                <img src="./theme/images/icons/rss.png"></a>
+    </p>
+
+        <h2>Categories</h2>
+        <ul class="navbar">
+                <li class="active"><a
+                        href="./category/updates.html">Updates</a></li>
+        </ul>
+
+
+</aside>
+
+<!-- Content -->
+<article>
+    <section id="content">
+        <article>
+            <h2 class="post_title post_detail"><a href="./checkpoint-2.html" rel="bookmark"
+                                                  title="Permalink to Checkpoint 2">Checkpoint 2</a></h2>
+            <div class="entry-content blog-post">
+                <p><strong>Checkpoint 2 submission:</strong></p>
+<p><strong>General Updates Since Midterm Presentation:</strong></p>
+<p>Since the past checkpoint, we have made substantial progress towards having a working system.</p>
+<p>As of the midterm presentation, our master and agent code were two separate entities that abstracted away each other’s functionality. We have since integrated our master and agents to work together and communicate with one another via socket programming.</p>
+<p>Changes to our Mesos master included the following: In the beginning of the master job while loop, the master now attempts to try and receive data from the agent to update all of the agent resources that it has. It then converts these agent resources to resource offers that are passed to the scheduling algorithm. Finally, it takes the selected job to run and decrements the agent resources along with sending the job to run back to the agent.</p>
+<p>We also added in logic in the master node to read from an input json file consisting of jobs to run and then creating job threads for each job in the input file.</p>
+<p>We also had to modify our previous agent logic to account for multiple tasks being assigned to the agent. Earlier, the agent could run two tasks at most at any given time. The agent was thus modified to create a worker thread for each task that was assigned to it. This ensured the number of tasks that an agent could handle would increase/decrease dynamically. Additionally, the agent was modified to run the job commands passed by the master. </p>
+<p><strong>Framework stuff</strong></p>
+<p>We have implemented a basic Flask server to represent light-weight jobs to be submitted to the datacenter. We have modified the Master and Agent code appropriately such that we are able to run Flask jobs in the system. Integrating this framework was critical because it makes it very simple to integrate other frameworks by simply passing the job-call command and resource requirements for jobs from other frameworks.</p>
+<p>We have also set up Hadoop to run in the single node mode (e.g. each Agent will have it’s own abstraction of running Hadoop jobs using a shared file system). We have created jobs that perform the word counting task on books of varying sizes from Project Guttenberg. We have not yet run Hadoop jobs in our simulated datacenter; however, integration should be trivial since the issue of integration was accomplished when enabling support for Flask.</p>
+<p><strong>Evaluation Plan</strong></p>
+<p>In order to evaluate our system, we plan to track the throughput of the system while using each of the three scheduling algorithms our Mesos simulator supports. The information needed to calculate this metric will be collected by timing the total runtime (using the system clock) of the jobs submitted. Since we know exactly which jobs are submitted, we will know when to “stop” the clock.</p>
+<p>Moreover, to track the effects of differing loads, we will track throughputs for varying numbers of jobs (e.g. 10, 100, 1000, 10000 jobs).</p>
+<p><strong>Next Steps</strong></p>
+<p>By early next week we plan to integrate a database framework into the system. We will then start running jobs at a much larger scale in the datacenter (thus far we’ve run on the order of 10 jobs at a time to verify correct behavior) and logging their runtimes in order to start developing ML algorithms for scheduling. We hope to have a preliminary model by the end of the week and will spend the final week+ of the project tuning the model through standard data science practices.</p>
+<p><strong>Link to Code Repositories</strong></p>
+<p><a href="https://github.com/cloud-job-analysis">https://github.com/cloud-job-analysis</a></p>
+<p><strong>Instructions to Run</strong></p>
+<p><strong>Agent:</strong></p>
+<ol>
+<li>Clone the model-classes repository</li>
+<li>In agent.py, change host to point to the IP address of the agent machine</li>
+<li>Run python agent.py</li>
+</ol>
+<p><strong>Master/Mesos:</strong></p>
+<ol>
+<li>Clone the single-node repository</li>
+<li>Switch to the integrate branch</li>
+<li>In mesos.py, change HOST to point to the IP address of the agent machine.</li>
+<li>Run mesos.py </li>
+</ol>
+<p><strong>Work Breakdown</strong></p>
+<p>Changes to the Master and Agent code were implemented via pair/quad programming. That is, all four of us worked together in the same room, writing and debugging code.</p>
+<p>Avais and Yash set up the Flask server and modified the Agent code to allow for integration.</p>
+<p>Eli figured out how to set up Hadoop locally and run mapreduce jobs. The brunt of this work was in the setup (various ssh issues, understanding hdfs, etc) since we are using Hello World-style code for word counts with permission from Professor Ghorbani.</p>
+            </div>
+            <div class="post_list">
+                <span>By </span>
+                <a href="./author/team-bayes.html">@Team BAYES</a>
+                <span> in </span>
+                <span class="post_category"><a href="./category/updates.html" rel="bookmark"
+                                               title="Permalink to Updates">[ Updates ]</a></span>
+                <span class="post_date">Sat 20 April 2019</span>
+                <div><span>Tags : </span>
+                </div>
+
+                <div class="entry-social">
+                    <span class="twitter"><a target="_blank" rel="nofollow"
+                                             onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"
+                                             title="Twitter"
+                                             href="https://twitter.com/share?url=./checkpoint-2.html&text=Checkpoint 2&via="><img
+                            src="./theme/images/icons/twitter-s.png"></a></span>
+
+                    <span class="gplus"><a target="_blank" title="Google +"
+                                           href="https://plus.google.com/share?url=./checkpoint-2.html&hl=fr"
+                                           rel="nofollow"
+                                           onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                            src="./theme/images/icons/google-s.png"></a></span>
+
+                    <span class="facebook"><a target="_blank" title="Facebook" rel="nofollow"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"
+                                              href="https://www.facebook.com/sharer.php?u=./checkpoint-2.html&t=Checkpoint 2"><img
+                            src="./theme/images/icons/facebook-s.png"></a></span>
+
+                    <a target="_blank" title="Linkedin"
+                       href="https://www.linkedin.com/shareArticle?mini=true&url=./checkpoint-2.html&title=Checkpoint 2"
+                       rel="nofollow"
+                       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                            src="./theme/images/icons/linkedin-s.png"></a>
+
+                    <span class="mail"><a
+                            href="mailto:?subject=Checkpoint 2&amp;body=Viens découvrir un article à propos de [Checkpoint 2] sur le site de Team BAYES. ./checkpoint-2.html"
+                            title="Share by Email" target="_blank"><img
+                            src="./theme/images/icons/mail-s.png"></a></span>
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<!-- Footer -->
+    <footer>
+        <p>
+            Blog powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>.
+            Theme <a href="https://github.com/parbhat/pelican-blue">Pelican-Blue</a> by <a
+                href="https://parbhatpuri.com/">@parbhat</a>.
+        </p>
+    </footer>
+
+
+</body>
+</html>
